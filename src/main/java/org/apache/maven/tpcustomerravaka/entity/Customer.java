@@ -77,7 +77,7 @@ public class Customer implements Serializable {
     @Column(name = "credit_limit")
     private BigDecimal creditLimit;
     @OneToMany(mappedBy = "customerId")
-    private Collection<Discount> discountCollection;
+    private Collection<Discount> discount;
 
     public Customer() {
     }
@@ -167,12 +167,12 @@ public class Customer implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Discount> getDiscountCollection() {
-        return discountCollection;
+    public Collection<Discount> getDiscount() {
+        return discount;
     }
 
-    public void setDiscountCollection(Collection<Discount> discountCollection) {
-        this.discountCollection = discountCollection;
+    public void setDiscount(Collection<Discount> discount) {
+        this.discount = discount;
     }
 
     @Override
