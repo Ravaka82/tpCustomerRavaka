@@ -12,9 +12,7 @@ import jakarta.persistence.Query;
 import jakarta.transaction.Transactional;
 import org.apache.maven.tpcustomerravaka.entity.Customer;
 
-/**
- * Gère la persistance des Customers.
- */
+
 @RequestScoped
 public class CustomerManager {
 
