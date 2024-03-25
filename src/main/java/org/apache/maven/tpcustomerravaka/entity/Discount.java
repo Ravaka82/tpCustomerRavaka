@@ -41,7 +41,7 @@ public class Discount implements Serializable {
     @Column(name = "discount_id")
     private Integer discountId;
     @Size(max = 50)
-    @Column(name = "discount")
+    @Column(name = "discount_code")
     private String discount;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "discount_rate")
@@ -51,7 +51,16 @@ public class Discount implements Serializable {
     private Customer customerId;
 
     public Discount() {
+        
     }
+
+    public Discount(Integer discountId, String discount, BigDecimal discountRate, Customer customerId) {
+        this.discountId = discountId;
+        this.discount = discount;
+        this.discountRate = discountRate;
+        this.customerId = customerId;
+    }
+    
 
     public Discount(Integer discountId) {
         this.discountId = discountId;
