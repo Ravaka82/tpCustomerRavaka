@@ -1,47 +1,52 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="jakarta.faces.html"
-      xmlns:f="jakarta.faces.core"
-      xmlns:p="http://primefaces.org/ui"
-      >
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
 
     <h:head>
         <title>Liste des clients</title>
     </h:head>
     <h:body>
-        <p:dataTable value="#{customerBean.customers}" paginator="true" rows="10"
-                     var="item" sortMode="multiple">
+        <h:form>
+            <p:dataTable value="#{customerBean.customers}" var="item" widgetVar="customerTable"
+                         emptyMessage="Aucun client avec ce critère"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="2,4,8,10"
+                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         filteredValue="#{customerBean.filteredCustomers}">
 
-            <p:column>
-                <f:facet name="header">
-                    <h:outputText value="Id"/>
-                </f:facet>
-                <h:outputText value="#{item.customerId}"/>
-            </p:column>
-            
-            <p:column sortBy="#{item.firstName}">
-                <f:facet name="header">
-                    <h:outputText value="Nom"/>
-                </f:facet>
-                <h:outputText value="#{item.firstName}"/>
-            </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Id"/>
+                    </f:facet>
+                    <h:outputText value="#{item.customerId}"/>
+                </p:column>
 
-            <p:column sortBy="#{item.city}">
-                <f:facet name="header">
-                    <h:outputText value="Ville"/>
-                </f:facet>
-                <h:outputText value="#{item.city}"/>
-            </p:column>
+                <p:column filterBy="#{item.firstName}" headerText="Nom" sortBy="#{item.firstName}" filterMatchMode="contains">
+                    <f:facet name="header">
+                        <h:outputText value="Nom"/>
+                    </f:facet>
+                    <h:outputText value="#{item.firstName}"/>
+                </p:column>
 
-            <p:column sortBy="#{item.state}">
-                <f:facet name="header">
-                    <h:outputText value="État"/>
-                </f:facet>
-                <h:outputText value="#{item.state}"/>
-            </p:column>
+                <p:column sortBy="#{item.city}">
+                    <f:facet name="header">
+                        <h:outputText value="Ville"/>
+                    </f:facet>
+                    <h:outputText value="#{item.city}"/>
+                </p:column>
+                
+                <p:column filterBy="#{item.state}" headerText="État" sortBy="#{item.state}" filterMatchMode="contains">
+                    <f:facet name="header">
+                        <h:outputText value="État"/>
+                    </f:facet>
+                    <h:outputText value="#{item.state} - #{item.city}"/>
+                </p:column>
 
-
-        </p:dataTable>
+            </p:dataTable>
+        </h:form>
     </h:body>
 </html>
