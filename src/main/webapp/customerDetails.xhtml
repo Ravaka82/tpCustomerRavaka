@@ -42,7 +42,7 @@
                         title="Discount" required="true" requiredMessage="The Discount field is required.">
                         <f:selectItems value="#{customerDetailsBean.discounts}"
                                        var="discount"
-                                       itemLabel="#{discount.discount}" 
+                                       itemLabel="#{discount.discount} (#{discount.discountRate} %)" 
                                        itemValue="#{discount}"/>
                     </h:selectOneMenu>
                 </h:panelGrid>

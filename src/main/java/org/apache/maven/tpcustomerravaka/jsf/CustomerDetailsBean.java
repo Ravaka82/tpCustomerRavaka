@@ -12,6 +12,8 @@ import java.io.Serializable;
 import jakarta.inject.Inject;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Named;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import org.apache.maven.tpcustomerravaka.entity.Customer;
 import org.apache.maven.tpcustomerravaka.entity.Discount;
@@ -78,4 +80,6 @@ public class CustomerDetailsBean implements Serializable {
     public List<Discount> getDiscounts() {
         return discountManager.getAllDiscounts();
     }
+
+
 }
