@@ -58,10 +58,9 @@
                     <f:facet name="header">
                         <h:outputText value="Taux de réduction"/>
                     </f:facet>
-                    <ui:repeat value="#{item.discount}" var="discount">
-                        <h:outputText value="#{discount.discount} : #{discount.discountRate} %"/>
-                    </ui:repeat>
+                    <h:outputText value="#{item.discount.discount} : #{item.discount.discountRate} %"/>
                 </p:column>
+
 
             </p:dataTable>
         </h:form>

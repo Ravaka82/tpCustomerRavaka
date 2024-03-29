@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package org.apache.maven.tpcustomerravaka.entity;
 
 import jakarta.persistence.Basic;
@@ -20,10 +16,6 @@ import jakarta.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
-/**
- *
- * @author user
- */
 @Entity
 @Table(name = "discount")
 @XmlRootElement
@@ -43,22 +35,18 @@ public class Discount implements Serializable {
     @Size(max = 50)
     @Column(name = "discount_code")
     private String discount;
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "discount_rate")
     private BigDecimal discountRate;
-    @JoinColumn(name = "customer_id", referencedColumnName = "customer_id")
-    @ManyToOne
-    private Customer customerId;
+
 
     public Discount() {
         
     }
 
-    public Discount(Integer discountId, String discount, BigDecimal discountRate, Customer customerId) {
+    public Discount(Integer discountId, String discount, BigDecimal discountRate) {
         this.discountId = discountId;
         this.discount = discount;
         this.discountRate = discountRate;
-        this.customerId = customerId;
     }
     
 
@@ -90,13 +78,6 @@ public class Discount implements Serializable {
         this.discountRate = discountRate;
     }
 
-    public Customer getCustomerId() {
-        return customerId;
-    }
-
-    public void setCustomerId(Customer customerId) {
-        this.customerId = customerId;
-    }
 
     @Override
     public int hashCode() {
@@ -107,7 +88,6 @@ public class Discount implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
         if (!(object instanceof Discount)) {
             return false;
         }

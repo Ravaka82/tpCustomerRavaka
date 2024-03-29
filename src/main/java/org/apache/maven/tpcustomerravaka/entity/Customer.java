@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package org.apache.maven.tpcustomerravaka.entity;
 
 import jakarta.persistence.Basic;
@@ -10,21 +6,16 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Size;
 import jakarta.xml.bind.annotation.XmlRootElement;
-import jakarta.xml.bind.annotation.XmlTransient;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Collection;
 
-/**
- *
- * @author user
- */
 @Entity
 @Table(name = "customer")
 @XmlRootElement
@@ -54,7 +45,6 @@ public class Customer implements Serializable {
     @Size(max = 50)
     @Column(name = "last_name")
     private String lastName;
-    // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
     @Size(max = 100)
     @Column(name = "email")
     private String email;
@@ -73,16 +63,21 @@ public class Customer implements Serializable {
     @Size(max = 20)
     @Column(name = "zip_code")
     private String zipCode;
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "credit_limit")
     private BigDecimal creditLimit;
-    @OneToMany(mappedBy = "customerId")
-    private Collection<Discount> discount;
+    @ManyToOne
+    @JoinColumn(name = "discount_id")
+    private Discount discount;
 
     public Customer() {
     }
 
-    public Customer(Integer customerId, String firstName, String lastName, String email, String phoneNumber, String address, String city, String state, String zipCode, BigDecimal creditLimit, Collection<Discount> discount) {
+    public Customer(Integer customerId) {
+        this.customerId = customerId;
+    }
+
+    // Constructeur sans la collection discount
+    public Customer(Integer customerId, String firstName, String lastName, String email, String phoneNumber, String address, String city, String state, String zipCode, BigDecimal creditLimit, Discount discountId) {
         this.customerId = customerId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -93,12 +88,7 @@ public class Customer implements Serializable {
         this.state = state;
         this.zipCode = zipCode;
         this.creditLimit = creditLimit;
-        this.discount = discount;
-    }
-    
-
-    public Customer(Integer customerId) {
-        this.customerId = customerId;
+        this.discount = discountId;
     }
 
     public Integer getCustomerId() {
@@ -181,12 +171,12 @@ public class Customer implements Serializable {
         this.creditLimit = creditLimit;
     }
 
-    @XmlTransient
-    public Collection<Discount> getDiscount() {
+    // Getter et setter pour discountId
+     public Discount getDiscount() {
         return discount;
     }
 
-    public void setDiscount(Collection<Discount> discount) {
+    public void setDiscount(Discount discount) {
         this.discount = discount;
     }
 
@@ -199,7 +189,6 @@ public class Customer implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
         if (!(object instanceof Customer)) {
             return false;
         }
@@ -214,5 +203,5 @@ public class Customer implements Serializable {
     public String toString() {
         return "org.apache.maven.tpcustomerravaka.entity.Customer[ customerId=" + customerId + " ]";
     }
-    
+
 }
