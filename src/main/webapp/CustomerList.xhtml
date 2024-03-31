@@ -33,11 +33,11 @@
                     <h:link outcome="customerDetails?idCustomer=#{item.customerId}" 
                             value="#{item.customerId}"/>
                 </p:column>
-                <p:column sortBy="#{item.firstName}" filterBy="#{item.firstName}">
+                <p:column sortBy="#{item.name}" filterBy="#{item.name}">
                     <f:facet name="header">
                         <h:outputText value="Nom"/>
                     </f:facet>
-                    <h:outputText value="#{item.firstName}"/>
+                    <h:outputText value="#{item.name}"/>
                 </p:column>
 
                 <p:column sortBy="#{item.state} #{item.city}" filterBy="#{item.state}">
@@ -58,7 +58,7 @@
                     <f:facet name="header">
                         <h:outputText value="Taux de réduction"/>
                     </f:facet>
-                    <h:outputText value="#{item.discount.discount} : #{item.discount.discountRate} %"/>
+                    <h:outputText value="#{item.discount.code} : #{item.discount.rate} %"/>
                 </p:column>
 
 

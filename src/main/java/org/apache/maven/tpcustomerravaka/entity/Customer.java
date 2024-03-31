@@ -1,94 +1,70 @@
 package org.apache.maven.tpcustomerravaka.entity;
 
-import jakarta.persistence.Basic;
+import java.io.Serializable;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.Size;
-import jakarta.xml.bind.annotation.XmlRootElement;
-import java.io.Serializable;
-import java.math.BigDecimal;
 
+/**
+ * Un client.
+ *
+ * @author ravaka
+ */
 @Entity
-@Table(name = "customer")
-@XmlRootElement
+@Table(name = "CUSTOMER")
 @NamedQueries({
     @NamedQuery(name = "Customer.findAll", query = "SELECT c FROM Customer c"),
     @NamedQuery(name = "Customer.findByCustomerId", query = "SELECT c FROM Customer c WHERE c.customerId = :customerId"),
-    @NamedQuery(name = "Customer.findByFirstName", query = "SELECT c FROM Customer c WHERE c.firstName = :firstName"),
-    @NamedQuery(name = "Customer.findByLastName", query = "SELECT c FROM Customer c WHERE c.lastName = :lastName"),
-    @NamedQuery(name = "Customer.findByEmail", query = "SELECT c FROM Customer c WHERE c.email = :email"),
-    @NamedQuery(name = "Customer.findByPhoneNumber", query = "SELECT c FROM Customer c WHERE c.phoneNumber = :phoneNumber"),
-    @NamedQuery(name = "Customer.findByAddress", query = "SELECT c FROM Customer c WHERE c.address = :address"),
+    @NamedQuery(name = "Customer.findByName", query = "SELECT c FROM Customer c WHERE c.name = :name"),
+    @NamedQuery(name = "Customer.findByAddressline1", query = "SELECT c FROM Customer c WHERE c.addressline1 = :addressline1"),
+    @NamedQuery(name = "Customer.findByAddressline2", query = "SELECT c FROM Customer c WHERE c.addressline2 = :addressline2"),
     @NamedQuery(name = "Customer.findByCity", query = "SELECT c FROM Customer c WHERE c.city = :city"),
     @NamedQuery(name = "Customer.findByState", query = "SELECT c FROM Customer c WHERE c.state = :state"),
-    @NamedQuery(name = "Customer.findByZipCode", query = "SELECT c FROM Customer c WHERE c.zipCode = :zipCode"),
+    @NamedQuery(name = "Customer.findByPhone", query = "SELECT c FROM Customer c WHERE c.phone = :phone"),
+    @NamedQuery(name = "Customer.findByFax", query = "SELECT c FROM Customer c WHERE c.fax = :fax"),
+    @NamedQuery(name = "Customer.findByEmail", query = "SELECT c FROM Customer c WHERE c.email = :email"),
     @NamedQuery(name = "Customer.findByCreditLimit", query = "SELECT c FROM Customer c WHERE c.creditLimit = :creditLimit")})
 public class Customer implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "customer_id")
+    @Column(name = "CUSTOMER_ID")
     private Integer customerId;
-    @Size(max = 50)
-    @Column(name = "first_name")
-    private String firstName;
-    @Size(max = 50)
-    @Column(name = "last_name")
-    private String lastName;
-    @Size(max = 100)
-    @Column(name = "email")
-    private String email;
-    @Size(max = 20)
-    @Column(name = "phone_number")
-    private String phoneNumber;
-    @Size(max = 255)
-    @Column(name = "address")
-    private String address;
-    @Size(max = 100)
-    @Column(name = "city")
+    @Column(name = "NAME")
+    private String name;
+    @Column(name = "ADDRESSLINE1")
+    private String addressline1;
+    @Column(name = "ADDRESSLINE2")
+    private String addressline2;
+    @Column(name = "CITY")
     private String city;
-    @Size(max = 50)
-    @Column(name = "state")
+    @Column(name = "STATE")
     private String state;
-    @Size(max = 20)
-    @Column(name = "zip_code")
-    private String zipCode;
-    @Column(name = "credit_limit")
-    private BigDecimal creditLimit;
-    @ManyToOne
-    @JoinColumn(name = "discount_id")
+    @Column(name = "PHONE")
+    private String phone;
+    @Column(name = "FAX")
+    private String fax;
+    @Column(name = "EMAIL")
+    private String email;
+    @Column(name = "CREDIT_LIMIT")
+    private Integer creditLimit;
+    @JoinColumn(name = "DISCOUNT_CODE", referencedColumnName = "CODE")
+    @ManyToOne(optional = false)
     private Discount discount;
+    @JoinColumn(name = "ZIP_CODE", referencedColumnName = "ZIP_CODE")
+    @ManyToOne(optional = false)
+    private MicroMarket zip;
 
     public Customer() {
     }
 
     public Customer(Integer customerId) {
         this.customerId = customerId;
-    }
-
-    // Constructeur sans la collection discount
-    public Customer(Integer customerId, String firstName, String lastName, String email, String phoneNumber, String address, String city, String state, String zipCode, BigDecimal creditLimit, Discount discountId) {
-        this.customerId = customerId;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.phoneNumber = phoneNumber;
-        this.address = address;
-        this.city = city;
-        this.state = state;
-        this.zipCode = zipCode;
-        this.creditLimit = creditLimit;
-        this.discount = discountId;
     }
 
     public Integer getCustomerId() {
@@ -99,44 +75,28 @@ public class Customer implements Serializable {
         this.customerId = customerId;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getName() {
+        return name;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getAddressline1() {
+        return addressline1;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setAddressline1(String addressline1) {
+        this.addressline1 = addressline1;
     }
 
-    public String getEmail() {
-        return email;
+    public String getAddressline2() {
+        return addressline2;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
+    public void setAddressline2(String addressline2) {
+        this.addressline2 = addressline2;
     }
 
     public String getCity() {
@@ -155,29 +115,52 @@ public class Customer implements Serializable {
         this.state = state;
     }
 
-    public String getZipCode() {
-        return zipCode;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setZipCode(String zipCode) {
-        this.zipCode = zipCode;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
-    public BigDecimal getCreditLimit() {
+    public String getFax() {
+        return fax;
+    }
+
+    public void setFax(String fax) {
+        this.fax = fax;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public Integer getCreditLimit() {
         return creditLimit;
     }
 
-    public void setCreditLimit(BigDecimal creditLimit) {
+    public void setCreditLimit(Integer creditLimit) {
         this.creditLimit = creditLimit;
     }
 
-    // Getter et setter pour discountId
-     public Discount getDiscount() {
+    public Discount getDiscount() {
         return discount;
     }
 
     public void setDiscount(Discount discount) {
         this.discount = discount;
+    }
+
+    public MicroMarket getZip() {
+        return zip;
+    }
+
+    public void setZip(MicroMarket zip) {
+        this.zip = zip;
     }
 
     @Override
@@ -189,6 +172,7 @@ public class Customer implements Serializable {
 
     @Override
     public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
         if (!(object instanceof Customer)) {
             return false;
         }
@@ -201,7 +185,7 @@ public class Customer implements Serializable {
 
     @Override
     public String toString() {
-        return "org.apache.maven.tpcustomerravaka.entity.Customer[ customerId=" + customerId + " ]";
+          return "org.apache.maven.tpcustomerravaka.entity.Customer[ customerId=" + customerId + " ]";
     }
 
 }

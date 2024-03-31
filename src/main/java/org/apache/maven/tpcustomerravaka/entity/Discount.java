@@ -1,98 +1,84 @@
 package org.apache.maven.tpcustomerravaka.entity;
 
-import jakarta.persistence.Basic;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.NamedQueries;
-import jakarta.persistence.NamedQuery;
-import jakarta.persistence.Table;
-import jakarta.validation.constraints.Size;
-import jakarta.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Collection;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.NamedQueries;
+import jakarta.persistence.NamedQuery;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 
+/**
+ *
+ * @author
+ */
 @Entity
-@Table(name = "discount")
-@XmlRootElement
+@Table(name = "DISCOUNT")
 @NamedQueries({
     @NamedQuery(name = "Discount.findAll", query = "SELECT d FROM Discount d"),
-    @NamedQuery(name = "Discount.findByDiscountId", query = "SELECT d FROM Discount d WHERE d.discountId = :discountId"),
-    @NamedQuery(name = "Discount.findByDiscount", query = "SELECT d FROM Discount d WHERE d.discount = :discount"),
-    @NamedQuery(name = "Discount.findByDiscountRate", query = "SELECT d FROM Discount d WHERE d.discountRate = :discountRate")})
+    @NamedQuery(name = "Discount.findByCode", query = "SELECT d FROM Discount d WHERE d.code = :code"),
+    @NamedQuery(name = "Discount.findByRate", query = "SELECT d FROM Discount d WHERE d.rate = :rate")})
 public class Discount implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "discount_id")
-    private Integer discountId;
-    @Size(max = 50)
-    @Column(name = "discount_code")
-    private String discount;
-    @Column(name = "discount_rate")
-    private BigDecimal discountRate;
-
+    @Column(name = "CODE")
+    private String code;
+    @Column(name = "RATE")
+    private BigDecimal rate;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "discount")
+    private Collection<Customer> customerCollection;
 
     public Discount() {
-        
     }
 
-    public Discount(Integer discountId, String discount, BigDecimal discountRate) {
-        this.discountId = discountId;
-        this.discount = discount;
-        this.discountRate = discountRate;
-    }
-    
-
-    public Discount(Integer discountId) {
-        this.discountId = discountId;
+    public Discount(String code) {
+        this.code = code;
     }
 
-    public Integer getDiscountId() {
-        return discountId;
+    public String getCode() {
+        return code;
     }
 
-    public void setDiscountId(Integer discountId) {
-        this.discountId = discountId;
+    public void setCode(String code) {
+        this.code = code;
     }
 
-    public String getDiscount() {
-        return discount;
+    public BigDecimal getRate() {
+        return rate;
     }
 
-    public void setDiscount(String discount) {
-        this.discount = discount;
+    public void setRate(BigDecimal rate) {
+        this.rate = rate;
     }
 
-    public BigDecimal getDiscountRate() {
-        return discountRate;
+    public Collection<Customer> getCustomerCollection() {
+        return customerCollection;
     }
 
-    public void setDiscountRate(BigDecimal discountRate) {
-        this.discountRate = discountRate;
+    public void setCustomerCollection(Collection<Customer> customerCollection) {
+        this.customerCollection = customerCollection;
     }
-
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (discountId != null ? discountId.hashCode() : 0);
+        hash += (code != null ? code.hashCode() : 0);
         return hash;
     }
 
     @Override
     public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
         if (!(object instanceof Discount)) {
             return false;
         }
         Discount other = (Discount) object;
-        if ((this.discountId == null && other.discountId != null) || (this.discountId != null && !this.discountId.equals(other.discountId))) {
+        if ((this.code == null && other.code != null) || (this.code != null && !this.code.equals(other.code))) {
             return false;
         }
         return true;
@@ -100,7 +86,7 @@ public class Discount implements Serializable {
 
     @Override
     public String toString() {
-        return "org.apache.maven.tpcustomerravaka.entity.Discount[ discountId=" + discountId + " ]";
+        return "org.apache.maven.tpcustomerravaka.entity.Discount[ code=" + code + " ]";
     }
-    
+
 }

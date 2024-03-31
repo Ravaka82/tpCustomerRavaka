@@ -4,81 +4,95 @@
  */
 package org.apache.maven.tpcustomerravaka.entity;
 
-import jakarta.persistence.Basic;
+import java.io.Serializable;
+import java.util.Collection;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.Size;
-import jakarta.xml.bind.annotation.XmlRootElement;
-import java.io.Serializable;
 
 /**
  *
- * @author user
+ * @author
  */
 @Entity
-@Table(name = "micro_market")
-@XmlRootElement
+@Table(name = "MICRO_MARKET")
 @NamedQueries({
     @NamedQuery(name = "MicroMarket.findAll", query = "SELECT m FROM MicroMarket m"),
-    @NamedQuery(name = "MicroMarket.findByMarketId", query = "SELECT m FROM MicroMarket m WHERE m.marketId = :marketId"),
-    @NamedQuery(name = "MicroMarket.findByMarketName", query = "SELECT m FROM MicroMarket m WHERE m.marketName = :marketName"),
-    @NamedQuery(name = "MicroMarket.findByMarketArea", query = "SELECT m FROM MicroMarket m WHERE m.marketArea = :marketArea")})
+    @NamedQuery(name = "MicroMarket.findByZipCode", query = "SELECT m FROM MicroMarket m WHERE m.zipCode = :zipCode"),
+    @NamedQuery(name = "MicroMarket.findByRadius", query = "SELECT m FROM MicroMarket m WHERE m.radius = :radius"),
+    @NamedQuery(name = "MicroMarket.findByAreaLength", query = "SELECT m FROM MicroMarket m WHERE m.areaLength = :areaLength"),
+    @NamedQuery(name = "MicroMarket.findByAreaWidth", query = "SELECT m FROM MicroMarket m WHERE m.areaWidth = :areaWidth")})
 public class MicroMarket implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "market_id")
-    private Integer marketId;
-    @Size(max = 100)
-    @Column(name = "market_name")
-    private String marketName;
-    @Size(max = 255)
-    @Column(name = "market_area")
-    private String marketArea;
+    @Column(name = "ZIP_CODE")
+    private String zipCode;
+    @Column(name = "RADIUS")
+    private Double radius;
+    @Column(name = "AREA_LENGTH")
+    private Double areaLength;
+    @Column(name = "AREA_WIDTH")
+    private Double areaWidth;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "zip")
+    private Collection<Customer> customerCollection;
 
     public MicroMarket() {
     }
 
-    public MicroMarket(Integer marketId) {
-        this.marketId = marketId;
+    public MicroMarket(String zipCode) {
+        this.zipCode = zipCode;
     }
 
-    public Integer getMarketId() {
-        return marketId;
+    public String getZipCode() {
+        return zipCode;
     }
 
-    public void setMarketId(Integer marketId) {
-        this.marketId = marketId;
+    public void setZipCode(String zipCode) {
+        this.zipCode = zipCode;
     }
 
-    public String getMarketName() {
-        return marketName;
+    public Double getRadius() {
+        return radius;
     }
 
-    public void setMarketName(String marketName) {
-        this.marketName = marketName;
+    public void setRadius(Double radius) {
+        this.radius = radius;
     }
 
-    public String getMarketArea() {
-        return marketArea;
+    public Double getAreaLength() {
+        return areaLength;
     }
 
-    public void setMarketArea(String marketArea) {
-        this.marketArea = marketArea;
+    public void setAreaLength(Double areaLength) {
+        this.areaLength = areaLength;
+    }
+
+    public Double getAreaWidth() {
+        return areaWidth;
+    }
+
+    public void setAreaWidth(Double areaWidth) {
+        this.areaWidth = areaWidth;
+    }
+
+    public Collection<Customer> getCustomerCollection() {
+        return customerCollection;
+    }
+
+    public void setCustomerCollection(Collection<Customer> customerCollection) {
+        this.customerCollection = customerCollection;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (marketId != null ? marketId.hashCode() : 0);
+        hash += (zipCode != null ? zipCode.hashCode() : 0);
         return hash;
     }
 
@@ -89,7 +103,7 @@ public class MicroMarket implements Serializable {
             return false;
         }
         MicroMarket other = (MicroMarket) object;
-        if ((this.marketId == null && other.marketId != null) || (this.marketId != null && !this.marketId.equals(other.marketId))) {
+        if ((this.zipCode == null && other.zipCode != null) || (this.zipCode != null && !this.zipCode.equals(other.zipCode))) {
             return false;
         }
         return true;
@@ -97,7 +111,7 @@ public class MicroMarket implements Serializable {
 
     @Override
     public String toString() {
-        return "org.apache.maven.tpcustomerravaka.entity.MicroMarket[ marketId=" + marketId + " ]";
+        return "org.apache.maven.tpcustomerravaka.entity.MicroMarket[ zipCode=" + zipCode + " ]";
     }
-    
+
 }

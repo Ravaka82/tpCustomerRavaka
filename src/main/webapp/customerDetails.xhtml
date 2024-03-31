@@ -18,36 +18,36 @@
                 <h:panelGrid columns="2">
                     <h:outputLabel value="CustomerId:" for="customerId" />
                     <h:inputText id="customerId" value="#{customerDetailsBean.customer.customerId}" title="CustomerId" required="true" requiredMessage="The CustomerId field is required."/>
-                    <h:outputLabel value="FirstName:" for="firstName" />
-                    <h:inputText id="firstName" value="#{customerDetailsBean.customer.firstName}" title="FirstName" />
-                    <h:outputLabel value="LastName:" for="lastName" />
-                    <h:inputText id="lastName" value="#{customerDetailsBean.customer.lastName}" title="LastName" />
+                    <h:outputLabel value="name" for="name" />
+                    <h:inputText id="name" value="#{customerDetailsBean.customer.name}" title="name" />
                     <h:outputLabel value="Email:" for="email" />
                     <h:inputText id="email" value="#{customerDetailsBean.customer.email}" title="Email" />
                     <h:outputLabel value="PhoneNumber:" for="phoneNumber" />
-                    <h:inputText id="phoneNumber" value="#{customerDetailsBean.customer.phoneNumber}" title="PhoneNumber" />
+                    <h:inputText id="phoneNumber" value="#{customerDetailsBean.customer.phone}" title="PhoneNumber" />
                     <h:outputLabel value="Address:" for="address" />
-                    <h:inputText id="address" value="#{customerDetailsBean.customer.address}" title="Address" />
+                    <h:inputText id="address" value="#{customerDetailsBean.customer.addressline1}" title="Address" />
                     <h:outputLabel value="City:" for="city" />
                     <h:inputText id="city" value="#{customerDetailsBean.customer.city}" title="City" />
                     <h:outputLabel value="State:" for="state" />
                     <h:inputText id="state" value="#{customerDetailsBean.customer.state}" title="State" />
-                    <h:outputLabel value="ZipCode:" for="zipCode" />
-                    <h:inputText id="zipCode" value="#{customerDetailsBean.customer.zipCode}" title="ZipCode" />
                     <h:outputLabel value="CreditLimit:" for="creditLimit" />
                     <h:inputText id="creditLimit" value="#{customerDetailsBean.customer.creditLimit}" title="CreditLimit" />
                     <h:outputLabel value="Discount:" for="discount" />
-                    <h:selectOneMenu 
-                        id="discount" value="#{customerDetailsBean.customer.discount}" 
-                        title="Discount" required="true" requiredMessage="The Discount field is required.">
-                        <f:selectItems value="#{customerDetailsBean.discounts}"
-                                       var="discount"
-                                       itemLabel="#{discount.discount} (#{discount.discountRate} %)" 
-                                       itemValue="#{discount}"/>
+                    <h:selectOneMenu id="discount" value="#{customerDetailsBean.customer.discount}"   
+                                     title="Discount" required="true" 
+                                     requiredMessage="The Discount field is required."  
+                                     converter="discountConverter">   
+                        <f:selectItems value="#{customerDetailsBean.discounts}"  
+                                       var="discount"   
+                                       itemLabel="#{discount.code} : #{discount.rate} %" 
+                                       itemValue="#{discount}" />  
                     </h:selectOneMenu>
+                    <h:button id="back" value="Revenir à la liste" outcome="CustomerList"/>
+                    <h:commandButton id="update" value="Enregistrer" action="#{customerDetailsBean.update}"/>
+                    <h:messages/>
                 </h:panelGrid>
             </h:form>
         </f:view>
 
-    </h:body>
+    </h:body>   
 </html>
